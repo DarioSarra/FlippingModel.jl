@@ -1,0 +1,13 @@
+name = "FlippingModel"
+uuid = "d1f21f3f-7e64-48e0-840a-7ac13b8825cf"
+authors = ["DarioSarra <dariosarra@gmail.com>"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
