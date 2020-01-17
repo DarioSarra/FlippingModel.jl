@@ -1,4 +1,4 @@
-using DataDeps
+
 include("datalinks.jl")
 register(DataDep("PokesWildTypes",
     """
