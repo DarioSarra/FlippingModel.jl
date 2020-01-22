@@ -44,7 +44,9 @@ function process_bouts(df::DataFrames.AbstractDataFrame)
         Block = dd[1,:Block],
         Streak_within_Block = dd[1,:Streak_within_Block],
         Streak = dd[1,:Streak],
-        ReverseStreak = dd[1,:ReverseStreak]
+        ReverseStreak = dd[1,:ReverseStreak],
+        Protocol_Day = dd[1,:Protocol_Day],
+        Exp_Day = dd[1,:Exp_Day]
         )
         for s in dayly_vars_list
             if s in names(df)
