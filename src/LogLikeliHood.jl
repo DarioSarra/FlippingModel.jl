@@ -1,4 +1,5 @@
 export f_fast
+export AbstractModel
 
 function Log_LikeliHood(om,leaves,dist)
     if leaves
@@ -50,7 +51,7 @@ function  f_fast(cm, pars)
     v = sum(Log_LikeliHood(key..., G)*val for (key, val) in cm)
     return -v
 end
-
+#########
 abstract type AbstractModel end
 
 struct PoissonLapseUniform <: AbstractModel
@@ -64,11 +65,13 @@ end
 
 using Distributions: params
 Distributions.params(p::PoissonLapseUniform) = p.params
+Base.maximum(m::PoissonLapseUniform) = m.max
 
 function Distributions.cdf(p::PoissonLapseUniform, x::Int)
     T, r, ϵ = params(p)
     d = Gamma(T, 1/r)
-    # 1-ϵ e faccio Gamma, ϵ e faccio uniform
+    #ϵ = 0
+    # 1-ϵ e faccio Gamma, ϵ e faccio uniform, sommare e' uguale a "oppure" in probabilita'
     return (1-ϵ)*cdf(d, x) + ϵ*x/p.max
 end
 
@@ -100,4 +103,11 @@ function Distributions.fit(::Type{T}, b::DataFrames.AbstractDataFrame) where T<:
     end
     params(p) .= Optim.minimizer(res)
     return p
+end
+
+###
+function simulate(m::AbstractModel,n_samples=1)
+    w = [cdf(m,x)-cdf(m,x-1) for x in 1:maximum(m)]
+    weights = StatsBase.weights(w)
+    [sample(1:maximum(m),weights) for _ in 1:n_samples]
 end
