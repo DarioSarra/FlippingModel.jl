@@ -18,13 +18,18 @@ end
 ##
 using Distributions, StatsBase, StructArrays
 
-prova = Exponential(3)
-w = [cdf(prova,x)-cdf(prova,x-1) for x in 1:20]
-weights = StatsBase.weights(w)
-[sample(1:20,weights) for _ in 1:500]
 
-plot([pdf(prova,x) for x in 1:20])
 cm = countmap(StructArray((Omissions_plus_one = b.Omissions_plus_one, Leave = b.Leave)))
 pE = FlippingModel.init(PoissonLapseExponential,cm)
 
-plot([cdf(pE,x) for x in 1:20])
+##
+e = Exponential(3)
+g = Gamma(10,1/2)
+plot([cdf(g,x) - cdf(g,x-1) for x in 1:20])
+plot!([cdf(e,x) - cdf(e,x-1) for x in 1:20])
+plot!([cdf(pE,om) - cdf(pE,om-1) for om in 1:20])
+##
+plot([cdf(g,x) for x in 1:20])
+plot!([cdf(e,x) for x in 1:20])
+plot!([cdf(pE,om) for om in 1:20])
+##

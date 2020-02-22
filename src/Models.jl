@@ -26,7 +26,7 @@ struct PoissonLapseExponential <: AbstractModel
 end
 function init(::Type{<:PoissonLapseExponential}, cm::Dict)
     m = maximum(key.Omissions_plus_one for key in keys(cm))
-    return PoissonLapseUniform([10, 2, 3], m)
+    return PoissonLapseExponential([10, 2, 3], m)
 end
 
 Distributions.params(p::PoissonLapseExponential) = p.params
@@ -34,9 +34,10 @@ Base.maximum(m::PoissonLapseExponential) = m.max
 
 function Distributions.cdf(p::PoissonLapseExponential, x::Int)
     T, r, ϵ = params(p)
-    d = Gamma(T, 1/r)
+    g = Gamma(T, 1/r)
     l = Exponential(ϵ)
     #ϵ = 0
     # 1-ϵ e faccio Gamma, ϵ e faccio uniform, sommare e' uguale a "oppure" in probabilita'
-    return (1-cdf(l,x))*cdf(d, x) + cdf(l,x)
+    #return (1-cdf(l,x))*cdf(d, x) + cdf(l,x)
+    return (1-cdf(l,x))*cdf(g,x) + cdf(l,x)
 end
