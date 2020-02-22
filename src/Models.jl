@@ -10,7 +10,7 @@ mutable struct Model{N,p <: AbstractArray,d}
         new{N,p,d}(pars,dist)
 end
 
-StatsBase.sample(x,m::Model) = sample(x,StatsBase.Weights(pdf(m.dist(m.pars...),x)))
+StatsBase.sample(x,m::Model) = sample(x,StatsBase.Weights(pdf.(m.dist(m.pars...),x)))
 ##
 p = Model{:loglike}([2,5],Gamma)
 sample(0:20,p)
