@@ -14,6 +14,7 @@ include("loaddata.jl")
 include("bouts.jl")
 include("Models.jl")
 include("LogLikeliHood.jl")
+include("survival.jl")
 
 greet() = print("Hello World!")
 

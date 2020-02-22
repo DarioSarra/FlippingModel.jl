@@ -1,8 +1,8 @@
 using Recombinase, Plots
-Simulated
-Simulated.Leave = true
+##
+Simulated[!, :Leave] .= true
 args, kwargs = series2D(
-    Recombinase.discrete(survival),
+    Recombinase.discrete(FlippingModel.survival),
     Simulated,
     error = :MouseID,
     Recombinase.Group(color = :Protocol, linestyle = :Wall),
@@ -17,7 +17,7 @@ p1 = plot(args...;
     ylabel = "pdf",
     xlabel = "pokes after last reward")
 #savefig(p1,"/home/beatriz/Documents/Dario_reports/NewProtocols/Fitting/model_without_lapse.pdf")
-###
+
 # We need to take out trials that started after a wrong leave
 #
 
@@ -28,7 +28,7 @@ p1 = plot(args...;
 # end
 
 args, kwargs = series2D(
-    Recombinase.discrete(survival),
+    Recombinase.discrete(FlippingModel.survival),
     b,
     error = :MouseID,
     Recombinase.Group(color = :Protocol, linestyle = :Wall),
@@ -36,6 +36,7 @@ args, kwargs = series2D(
     ribbon = true
     )
 p2 = plot!(p1,args...;kwargs...,legend = false,fillalpha = 0,linewidth=2)
+##
 plot(args...;kwargs...)
 #savefig(p1,"/home/beatriz/Documents/Dario_reports/NewProtocols/Fitting/model&data_without_lapse.pdf")
 ###

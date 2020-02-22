@@ -3,18 +3,17 @@ comp = by(b,[:Protocol,:Wall,:MouseID]) do dd
     T, r, lapse = params(m)
     (T=T, r=r, lapse=lapse, model=m)
 end
+
+
+Simulated = by(comp,[:Protocol,:Wall,:MouseID]) do dd
+    (simulation = FlippingModel.simulate(dd[1,:model], 500),)
+end
 ##
 comp = by(b,[:Protocol,:Wall,:MouseID]) do dd
     m = fit(FlippingModel.PoissonLapseExponential, dd)
     T, r, lapse = params(m)
     (T=T, r=r, lapse=lapse, model=m)
 end
-##
-Simulated = by(comp,[:Protocol,:Wall,:MouseID]) do dd
-    (simulation = FlippingModel.simulate(dd[1,:model], 500),)
-end
-##
-##
 ##
 using Distributions, StatsBase, StructArrays
 

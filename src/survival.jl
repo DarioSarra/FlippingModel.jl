@@ -1,4 +1,5 @@
 using Survival: KaplanMeier
+using Recombinase: Analysis
 function _survival(times, events; axis = discrete_axis(times, npoints = npoints), kwargs...)
     km = fit(KaplanMeier, times, events)
     surv = zeros(length(axis))

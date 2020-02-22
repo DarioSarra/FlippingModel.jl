@@ -1,7 +1,7 @@
 using Revise
 using FlippingModel
 using DataFrames, Optim
-using BrowseTables
+# using BrowseTables
 using Test
 import Distributions: pdf
 
@@ -27,4 +27,4 @@ b = filter(bouts) do row
     row.Day > 20191215
 end
 disallowmissing!(b, :Leave)
-open_html_table(b[end-100:end,:])
+# open_html_table(b[end-100:end,:])
