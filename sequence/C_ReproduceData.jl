@@ -1,11 +1,12 @@
 using Recombinase, Plots
 Simulated
+Simulated.Leave = true
 args, kwargs = series2D(
-    Recombinase.discrete(Recombinase.density),
+    Recombinase.discrete(survival),
     Simulated,
     error = :MouseID,
     Recombinase.Group(color = :Protocol, linestyle = :Wall),
-    select = (:simulation),
+    select = (:simulation, :Leave),
     ribbon = true
     )
 p1 = plot(args...;
@@ -17,18 +18,21 @@ p1 = plot(args...;
     xlabel = "pokes after last reward")
 #savefig(p1,"/home/beatriz/Documents/Dario_reports/NewProtocols/Fitting/model_without_lapse.pdf")
 ###
-test = filter(b) do row
-    !ismissing(row.Leave) &&
-    row.Omissions_plus_one <21 &&
-    row.Leave
-end
+# We need to take out trials that started after a wrong leave
+#
+
+# b.after_wrong =
+# test = filter(b) do row
+#     !ismissing(row.Leave) && row.Leave
+#     # row.Omissions_plus_one <21 &&
+# end
 
 args, kwargs = series2D(
-    Recombinase.discrete(Recombinase.density),
-    test,
+    Recombinase.discrete(survival),
+    b,
     error = :MouseID,
     Recombinase.Group(color = :Protocol, linestyle = :Wall),
-    select = (:Omissions_plus_one),
+    select = (:Omissions_plus_one, :Leave),
     ribbon = true
     )
 p2 = plot!(p1,args...;kwargs...,legend = false,fillalpha = 0,linewidth=2)

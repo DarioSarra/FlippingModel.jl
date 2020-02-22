@@ -26,4 +26,5 @@ b = filter(bouts) do row
     row.Protocol_Day > 1 &&
     row.Day > 20191215
 end
+disallowmissing!(b, :Leave)
 open_html_table(b[end-100:end,:])
