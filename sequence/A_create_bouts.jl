@@ -5,7 +5,7 @@ using DataFrames, Optim
 using Test
 import Distributions: pdf
 
-
+##
 pokes
 names(pokes)
 pokes[!,:Leave] = Vector{Union{Missing,Bool}}(missing,length(pokes.Side))
@@ -27,4 +27,8 @@ b = filter(bouts) do row
     row.Day > 20191215
 end
 disallowmissing!(b, :Leave)
+##
+using CSV
+file = "/Volumes/GoogleDrive/My Drive/Flipping/Datasets/Stimulations/WT_new_protocols/Results/bouts.csv"
+CSV.write(file,b)
 # open_html_table(b[end-100:end,:])

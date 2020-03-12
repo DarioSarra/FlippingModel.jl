@@ -7,7 +7,7 @@ using Distributions, StructArrays, StatsBase
 
 export pokes, streaks, process_bouts, fit
 export AbstractModel, Log_LikeliHood, params
-export  PoissonLapseUniform, PoissonLapseExponential
+export PoissonLapseUniform, PoissonLapseExponential
 
 include("datadeps.jl")
 include("loaddata.jl")

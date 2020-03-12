@@ -28,7 +28,7 @@ function process_bouts(df::DataFrames.AbstractDataFrame)
     #df.sidechange[1] = false
     df[:,:Bout] = count_bout(df.Reward,df.Side)
     #df[!,:Omissions_plus_one].=0
-    dayly_vars_list = [:Session, :MouseID, :Day, :Daily_Session, :Box,:Protocol];
+    dayly_vars_list = [:Session, :MouseID, :Day, :Daily_Session, :Box,:Protocol,:Stim_Day];
     bout_table = by(df, :Bout) do dd
         dt = DataFrame(
         Omissions_plus_one = size(dd,1),

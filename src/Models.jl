@@ -15,7 +15,7 @@ Base.maximum(m::PoissonLapseUniform) = m.max
 function Distributions.cdf(p::PoissonLapseUniform, x::Int)
     T, r, ϵ = params(p)
     d = Gamma(T, 1/r)
-    #ϵ = 0
+    # ϵ = 0
     # 1-ϵ e faccio Gamma, ϵ e faccio uniform, sommare e' uguale a "oppure" in probabilita'
     return (1-ϵ)*cdf(d, x) + ϵ*x/p.max
 end
@@ -39,5 +39,5 @@ function Distributions.cdf(p::PoissonLapseExponential, x::Int)
     #ϵ = 0
     # 1-ϵ e faccio Gamma, ϵ e faccio uniform, sommare e' uguale a "oppure" in probabilita'
     #return (1-cdf(l,x))*cdf(d, x) + cdf(l,x)
-    return (1-cdf(l,x))*cdf(g,x) + cdf(l,x)
+    return (1-0.01)*cdf(g,x) + 0.01*cdf(l,x)
 end

@@ -1,5 +1,30 @@
 using Recombinase, Plots
 ##
+args, kwargs = Recombinase.series2D(
+    Recombinase.discrete(FlippingModel.survival),
+    b,
+    error = :MouseID,
+    Recombinase.Group(color = :Protocol, linestyle = :Wall),
+    select = (:Omissions_plus_one, :Leave),
+    ribbon = true
+    )
+p1 = plot(args...;
+    kwargs...,
+    legend = false,
+    grid = false,
+    thickness_scaling = 2.5,
+    tick_orientation = :out,
+    size = (809,500),
+    linewidth=2,
+    fillalpha= 0,
+    xlims = (0,16),
+    xticks = 1:2:16)
+##
+savefig(p1,"/Volumes/GoogleDrive/My Drive/Reports for Zach/NewProtocols/Fitting/Survival_from_data.pdf")
+##
+figures = "/Users/dariosarra/Documents/Lab/Mainen/Presentations/Walton_visit/figures/unprocessed_plots"
+savefig(p1,joinpath(figures,"New_data_survival.pdf"))
+##
 Simulated[!, :Leave] .= true
 args, kwargs = series2D(
     Recombinase.discrete(FlippingModel.survival),
@@ -9,24 +34,12 @@ args, kwargs = series2D(
     select = (:simulation, :Leave),
     ribbon = true
     )
-p1 = plot(args...;
-    kwargs...,
+p2 = plot!(p1,args...;kwargs...,
     legend = false,
-    linealpha = 0,
-    fillalpha=0.3,
-    ylabel = "pdf",
-    xlabel = "pokes after last reward")
-#savefig(p1,"/home/beatriz/Documents/Dario_reports/NewProtocols/Fitting/model_without_lapse.pdf")
-
-# We need to take out trials that started after a wrong leave
-#
-
-# b.after_wrong =
-# test = filter(b) do row
-#     !ismissing(row.Leave) && row.Leave
-#     # row.Omissions_plus_one <21 &&
-# end
-
+    fillalpha = 0.25,linealpha=0)
+##
+savefig(p1,"/Volumes/GoogleDrive/My Drive/Reports for Zach/NewProtocols/Fitting/Survival_from_fit.pdf")
+##
 args, kwargs = series2D(
     Recombinase.discrete(FlippingModel.survival),
     b,
@@ -35,13 +48,14 @@ args, kwargs = series2D(
     select = (:Omissions_plus_one, :Leave),
     ribbon = true
     )
-p2 = plot!(p1,args...;kwargs...,legend = false,fillalpha = 0,linewidth=2)
+p2 = plot!(p1,args...;kwargs...,
+    legend = false
+    ,fillalpha = 0,linewidth=2)
 ##
-plot(args...;kwargs...)
-#savefig(p1,"/home/beatriz/Documents/Dario_reports/NewProtocols/Fitting/model&data_without_lapse.pdf")
-###
-p1
-p3
+savefig(p1,"/Volumes/GoogleDrive/My Drive/Reports for Zach/NewProtocols/Fitting/Survival_fit.pdf")
+##
+figures = "/Users/dariosarra/Documents/Lab/Mainen/Presentations/Walton_visit/figures/unprocessed_plots"
+savefig(p1,joinpath(figures,"New_data_survival_fit.pdf"))
 ###
 s = filter(streaks) do row
     row.Correct_start &&
